@@ -1,0 +1,28 @@
+version: '3'
+services:
+  java:
+    build:
+      dockerfile: ./user-microservice/Dockerfile
+      context: .
+    image: rodolfops/spring
+    container_name: user-microservice
+    ports:
+      - "8080:8080"
+      - "6565:6565"
+    networks: 
+      - production-network
+    depends_on:
+      - "node"
+  node:
+    build:
+      dockerfile: ./products-microservice/Dockerfile
+      context: .
+    image: rodolfops/node
+    container_name: product-microservice
+    ports:
+      - "8086:8086"
+    networks: 
+      - production-network
+networks: 
+    production-network:
+        driver: bridge
